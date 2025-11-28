@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Road Not Taken - Robert Frost</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自定義字體與動畫設定 */
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.8s ease-out;
+            pointer-events: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+        }
+
+        .visible {
+            opacity: 1;
+        }
+
+        /* 詩句的懸停效果 */
+        .stanza:hover {
+            color: #2d3748; /* gray-800 */
+        }
+    </style>
+</head>
+<body class="bg-[#fdfbf7] text-[#4a4a4a] min-h-screen flex flex-col items-center justify-center p-6 selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- 初始畫面 (Landing Section) -->
+    <div id="start-section" class="text-center space-y-8 transition-all duration-700">
+        <h1 class="text-4xl md:text-6xl font-semibold tracking-wide text-stone-800 mb-2">The Road Not Taken</h1>
+        <p class="text-lg text-stone-500 italic">By Robert Frost</p>
+        
+        <div class="pt-8">
+            <button id="start-btn" class="group relative px-8 py-3 overflow-hidden rounded-full bg-stone-800 text-stone-100 shadow-lg transition-all hover:bg-stone-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2">
+                <span class="relative z-10 text-lg tracking-widest font-light">開始閱讀</span>
+                <div class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-stone-700/50"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- 詩詞內容 (Poem Section) - 一開始隱藏 -->
+    <div id="poem-section" class="hidden max-w-2xl w-full fade-in">
+        <div class="border-t-4 border-b-4 border-double border-stone-300 py-10 md:py-16 px-4 md:px-12 bg-white shadow-sm mx-auto">
+            
+            <!-- 插入影片區域 -->
+            <div class="mb-8 overflow-hidden rounded shadow-sm">
+                <video class="w-full h-48 md:h-72 object-cover" autoplay loop muted playsinline>
+                    <source src="https://videos.pexels.com/video-files/20151340/20151340-uhd_3840_2160_24fps.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <header class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mb-4">The Road Not Taken</h2>
+                <p class="text-stone-500 italic mb-6">Robert Frost (1916)</p>
+                
+                <!-- 朗讀音檔播放器 -->
+                <audio controls class="w-full max-w-md mx-auto mt-4 h-8 opacity-80 hover:opacity-100 transition-opacity">
+                    <source src="https://files.catbox.moe/vn8uuz.wav" type="audio/wav">
+                    您的瀏覽器不支援音訊播放。
+                </audio>
+            </header>
+
+            <article class="space-y-8 text-lg md:text-xl leading-relaxed text-stone-700 text-left pl-4 md:pl-10">
+                
+                <!-- Stanza 1 -->
+                <div class="stanza transition-colors duration-300">
+                    <p>Two roads diverged in a yellow wood,</p>
+                    <p>And sorry I could not travel both</p>
+                    <p>And be one traveler, long I stood</p>
+                    <p>And looked down one as far as I could</p>
+                    <p>To where it bent in the undergrowth;</p>
+                </div>
+
+                <!-- Stanza 2 -->
+                <div class="stanza transition-colors duration-300">
+                    <p>Then took the other, as just as fair,</p>
+                    <p>And having perhaps the better claim,</p>
+                    <p>Because it was grassy and wanted wear;</p>
+                    <p>Though as for that the passing there</p>
+                    <p>Had worn them really about the same,</p>
+                </div>
+
+                <!-- Stanza 3 -->
+                <div class="stanza transition-colors duration-300">
+                    <p>And both that morning equally lay</p>
+                    <p>In leaves no step had trodden black.</p>
+                    <p>Oh, I kept the first for another day!</p>
+                    <p>Yet knowing how way leads on to way,</p>
+                    <p>I doubted if I should ever come back.</p>
+                </div>
+
+                <!-- Stanza 4 -->
+                <div class="stanza transition-colors duration-300">
+                    <p>I shall be telling this with a sigh</p>
+                    <p>Somewhere ages and ages hence:</p>
+                    <p>Two roads diverged in a wood, and I—</p>
+                    <p>I took the one less traveled by,</p>
+                    <p>And that has made all the difference.</p>
+                </div>
+
+            </article>
+
+            <footer class="mt-12 text-center">
+                <button onclick="location.reload()" class="text-sm text-stone-400 hover:text-stone-600 transition-colors border-b border-transparent hover:border-stone-400 pb-0.5">
+                    重新開始
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- 按鈕音效 (隱藏) -->
+    <audio id="btn-sound" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2025/11/08/audio_e650b8962b.mp3?filename=menu-open-sound-effect-432999.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.getElementById('start-btn');
+            const startSection = document.getElementById('start-section');
+            const poemSection = document.getElementById('poem-section');
+            const btnSound = document.getElementById('btn-sound');
+
+            startBtn.addEventListener('click', () => {
+                // 播放按鈕音效
+                if (btnSound) {
+                    btnSound.volume = 0.5; // 設定音量適中
+                    btnSound.currentTime = 0;
+                    btnSound.play().catch(e => console.log('音效播放失敗:', e));
+                }
+
+                // 1. 淡出開始畫面
+                startSection.classList.add('fade-out');
+
+                // 2. 等待淡出動畫結束後
+                setTimeout(() => {
+                    // 隱藏開始畫面，顯示詩詞容器
+                    startSection.style.display = 'none';
+                    poemSection.classList.remove('hidden');
+                    
+                    // 強制重繪以觸發 CSS transition
+                    void poemSection.offsetWidth; 
+                    
+                    // 3. 淡入詩詞
+                    poemSection.classList.add('visible');
+                }, 800); // 對應 CSS 的 transition 時間
+            });
+        });
+    </script>
+</body>
+</html>
